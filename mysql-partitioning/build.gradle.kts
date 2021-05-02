@@ -35,8 +35,28 @@ tasks.create("initDatabase") {
         delete("./db/")
 
         exec {
-            workingDir(".")
+            workingDir(projectDir)
             commandLine("mysqld", "--defaults-file=db.cnf", "--initialize-insecure")
+        }
+    }
+}
+
+tasks.create("runServer") {
+    doFirst {
+        println("Starting server...")
+        ProcessBuilder()
+            .directory(projectDir)
+            .command("mysqld", "--defaults-file=db.cnf")
+            .start()
+    }
+}
+
+tasks.create("initSQLScripts") {
+    doFirst {
+        exec {
+            isIgnoreExitValue = true
+            workingDir(projectDir)
+            commandLine("mysql", "--protocol=tcp", "--port=3305", "--user=root", "<", "db_init.sql")
         }
     }
 }
