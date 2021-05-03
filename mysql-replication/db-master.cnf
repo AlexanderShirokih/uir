@@ -1,0 +1,9 @@
+[mysqld]
+port=3305
+datadir=./db:master
+socket=./mysql_master.socket
+server-id=1
+mysqlx=0
+gtid-mode=on
+enforce_gtid_consistency = ON
+default_authentication_plugin = mysql_native_password

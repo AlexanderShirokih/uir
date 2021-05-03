@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 40% auto;
+  grid-template-rows: 100%;
+  gap: 10px;
+}
+
+.container :last-child {
+  max-width: 700px;
+}
+
+.container :last-child h3 {
+  text-align: center;
+}
+
+.form {
+  top: 0;
+  position: fixed;
+  display: inline-block;
+  margin: 40px;
+  padding: 28px 100px 28px 60px;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+.form input:not([type="submit"]) {
+  border: 5px solid white;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 0 0 10px 0;
+  width: 100%;
+}
+
+.form input[type="submit"] {
+  padding: 10px;
+  border: none;
+  background-color: #3f51b5;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 28px;
+}
+
+.serverOutput {
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1), 0 0 16px rgba(0, 0, 0, 0.1);
+  margin: 24px;
+  padding: 16px;
+}
+
+.serverOutput li {
+  padding: 20px;
+}
+
+.serverOutput li :first-child {
+  display: inline-block;
+  padding-right: 10px;
+  width: 120px;
+}
+.serverOutput li :last-child {
+  color: rgb(105 105 105);
+}

@@ -1,0 +1,9 @@
+[mysqld]
+port=3309
+datadir=./db:slave2
+socket=./mysql_slave2.socket
+server-id=3
+mysqlx=0
+gtid-mode=on
+enforce_gtid_consistency = ON
+default_authentication_plugin = mysql_native_password

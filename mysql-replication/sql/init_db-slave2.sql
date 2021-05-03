@@ -1,0 +1,7 @@
+STOP SLAVE;
+CHANGE MASTER TO MASTER_HOST='localhost',
+    MASTER_PORT=3305,
+    MASTER_USER='repl_master',
+    MASTER_PASSWORD='repl_master_pass',
+    MASTER_AUTO_POSITION=1;
+START SLAVE;
