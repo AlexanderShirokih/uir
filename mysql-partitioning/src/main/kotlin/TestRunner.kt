@@ -13,7 +13,9 @@ data class TestResult(
     val query: String,
 )
 
+// Функция для запуска тестов
 fun runTests(): List<TestResult> {
+    // Удаляем все предыдущие записи
     transaction {
         Parameters.deleteAll()
         ParametersWithPartition.deleteAll()
@@ -22,12 +24,15 @@ fun runTests(): List<TestResult> {
     var total = 0
 
     return listOf(100, 400, 500, 1000).flatMap { insert ->
+        // Вставляем новые записи
         insertItems(insert)
         total += insert
+        // Выполняем тестовые запросы
         executeQueries(total)
     }
 }
 
+// Выполняет серию тестовых запросов
 fun executeQueries(total: Int) = sequence {
     yield(executeQuery(total, Parameters))
     yield(executeQuery(total, Parameters, id = 100))
@@ -35,6 +40,7 @@ fun executeQueries(total: Int) = sequence {
     yield(executeQuery(total, ParametersWithPartition, id = 100))
 }
 
+// Выполняет запрос и возвращает результат замеров
 fun executeQuery(total: Int, entity: Table, id: Int? = null): TestResult {
     val whereClause = id?.run { "WHERE id=$this" } ?: ""
     val query = "SELECT SQL_NO_CACHE * FROM ${entity.tableName} $whereClause LIMIT 1"
@@ -47,9 +53,12 @@ fun executeQuery(total: Int, entity: Table, id: Int? = null): TestResult {
     )
 }
 
+/// Заполняет таблицу данными
 fun insertItems(count: Int) {
+    // Генерируем случайные данные
     val data = generateData(count).asIterable()
 
+    // Заполняем таблицу сгенерированными данными
     transaction {
         Parameters.batchInsert(data) { (code, value) ->
             this[Parameters.code] = code
@@ -63,6 +72,7 @@ fun insertItems(count: Int) {
     }
 }
 
+// Генерирует последовательность случайных данных
 fun generateData(count: Int) = sequence {
     repeat(count) {
         yield(

@@ -1,9 +1,8 @@
 DROP DATABASE IF EXISTS partitioning;
 DROP USER IF EXISTS lab_user;
 
-CREATE USER lab_user IDENTIFIED BY 'kL74pmb#h96Y%2^';
-
 -- Create database and user
+CREATE USER lab_user IDENTIFIED BY 'kL74pmb#h96Y%2^';
 CREATE DATABASE `partitioning`;
 
 USE partitioning;

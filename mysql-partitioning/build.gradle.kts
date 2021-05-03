@@ -11,7 +11,7 @@ group = "ru.alexandershirokikh.uir"
 version = "0.0.1"
 
 application {
-    mainClassName = "io.ktor.server.netty.EngineMain"
+    mainClassName = "ru.alexandershirokikh.uir.ApplicationKt"
 }
 
 repositories {
@@ -30,6 +30,7 @@ dependencies {
     implementation("com.zaxxer:HikariCP:4.0.3")
 }
 
+// Задача для инициализации базы данных
 tasks.create("initDatabase") {
     doFirst {
         delete("./db/")
@@ -41,6 +42,7 @@ tasks.create("initDatabase") {
     }
 }
 
+// Задача для запуска mysqld сервера
 tasks.create("runServer") {
     doFirst {
         println("Starting server...")
@@ -51,6 +53,7 @@ tasks.create("runServer") {
     }
 }
 
+/// Задача для создания схемы базы данных
 tasks.create("initSQLScripts") {
     doFirst {
         exec {
