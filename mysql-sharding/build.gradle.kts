@@ -33,11 +33,10 @@ dependencies {
 // Задача для инициализации базы данных
 tasks.create("initDatabase") {
     doFirst {
-        delete("./db:master/", "./db:slave1/", "./db:slave2/")
-
-        initializeInsecure("db-master")
-        initializeInsecure("db-slave1")
-        initializeInsecure("db-slave2")
+        for (db in listOf("db1", "db2", "db3")) {
+            delete("./$db/")
+            initializeInsecure(db)
+        }
     }
 }
 
@@ -45,16 +44,21 @@ fun initializeInsecure(configName: String) {
     println("Running mysqld init on: $configName")
     exec {
         workingDir(projectDir)
-        commandLine("mysqld", "--defaults-file=$configName.cnf", "--initialize-insecure")
+        commandLine(
+            "mysqld",
+            "--defaults-file=$configName.cnf",
+            "--initialize-insecure",
+            "--init-file=${projectDir.absolutePath}/db_init.sql"
+        )
     }
 }
 
 // Задача для запуска mysqld сервера
 tasks.create("runServer") {
     doFirst {
-        startServer("db-master")
-        startServer("db-slave1")
-        startServer("db-slave2")
+        for (db in listOf("db1", "db2", "db3")) {
+            startServer(db)
+        }
     }
 }
 
@@ -64,26 +68,4 @@ fun startServer(configName: String) {
         .directory(projectDir)
         .command("mysqld", "--defaults-file=$configName.cnf")
         .start()
-}
-
-// Задача для вывода подсказок для запуска клиентов
-tasks.create("printHints") {
-    doFirst {
-        printHints("db-master")
-        printHints("db-slave1")
-        printHints("db-slave2")
-    }
-}
-
-fun printHints(configName: String) {
-    // Вытягиваем порт из конфигурационного файла
-    val port = file("$configName.cnf")
-        .readLines()
-        .firstOrNull { line -> line.startsWith("port") }
-        ?: "port=3306"
-
-    println("To start ${configName}, type the following command: ")
-    println("\$ mysql --protocol=tcp --$port --user=root")
-    println("mysql> source sql/init_$configName.sql")
-    println()
 }

@@ -1,0 +1,30 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3305,
+            "driver": "MySQL",
+            "name": "Master connection",
+            "database": "replication_test",
+            "username": "repl_master",
+            "password": "repl_master_pass"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3307,
+            "driver": "MySQL",
+            "name": "test",
+            "database": "parameters",
+            "username": "root",
+            "password": ""
+        }
+    ]
+}

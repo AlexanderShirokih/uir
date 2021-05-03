@@ -1,0 +1,5 @@
+[mysqld]
+port=3309
+datadir=./db3
+socket=./mysql3.socket
+mysqlx=0
